@@ -10,7 +10,8 @@ namespace MathSentenceInterpreter
     {
         public override string BasicMathExpression(string s, double x = 0.01, int flag = -1)
         {
-            throw new NotImplementedException();
+            string sentence = InterpreterContext.Calculate(s, x, flag);
+            return sentence;
         }
 
         public override string BasicMathExpressionWithOneOrMoreUnknown(string s, double x, int flag = -2)

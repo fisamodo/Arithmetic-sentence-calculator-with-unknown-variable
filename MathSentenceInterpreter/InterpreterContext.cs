@@ -14,8 +14,12 @@ namespace MathSentenceInterpreter
         {
             this.s = s;
             this.x = x;
-            Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
 
+        }
+        public static string Calculate(string s, double x = 0.01, int flag = 0)
+        {
+            Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
+            return EvalExpression(s.ToCharArray()).ToString();
         }
         public static double EvalExpression(char[] expr)
         {

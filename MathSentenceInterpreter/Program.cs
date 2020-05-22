@@ -10,7 +10,9 @@ namespace MathSentenceInterpreter
     {
         static void Main(string[] args)
         {
-            InterpreterContext i = new InterpreterContext("2+3*3",1);
+            MathExpressions i = new MathExpressions();
+
+            i.BasicMathExpression("2+3*3");
         }
     }
 }
