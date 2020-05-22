@@ -10,6 +10,7 @@ namespace MathSentenceInterpreter
     {
         static void Main(string[] args)
         {
+            InterpreterContext i = new InterpreterContext("2+3*3",1);
         }
     }
 }
