@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MathInterpreter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,8 +26,8 @@ namespace MathSentenceInterpreter
 
         public override string BasicMathExpressionWithTrigonometry(string s, double x)
         {
-            throw new NotImplementedException();
-
+            string sentence = InterpreterContext.Calculate(s, x);
+            return sentence;
         }
     }
 }

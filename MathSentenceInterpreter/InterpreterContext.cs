@@ -4,18 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MathSentenceInterpreter
+namespace MathInterpreter
 {
     public class InterpreterContext
     {
-        string s;
-        double x;
+        public string s;
+        public double x;
         public InterpreterContext(String s, double x)
         {
             this.s = s;
             this.x = x;
-
         }
+
         public static string Calculate(string s, double x = 0.01, int flag = 0)
         {
             string sentence = "";
@@ -23,25 +23,86 @@ namespace MathSentenceInterpreter
             int[] index = GetIndexes(s, 'x');
             if (flag == -1 || flag == -2)
             {
-                if (flag == -1)
-                {                
+                if (x == 0.01)
+                {
+                    if (flag == -2)
+                    {
+                        s = convertUnknown(s, index, x);
+                        sentence = (EvalExpression(s.ToCharArray()).ToString());
+                        Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
+                        return sentence;
+                    }
+
+                }
+                s = convertUnknown(s, index, x);
+                if (flag == -2)
+                {
                     sentence = (EvalExpression(s.ToCharArray()).ToString());
                     Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                     return sentence;
                 }
-                sentence = convertUnknown(s, index, x);
-                if (flag == -2)
+
+                if (flag == -1)
                 {
-                    sentence = EvalExpression(s.ToCharArray()).ToString();
+                    if (indext1 != -1)
+                    {
+                        s = convertToPositiveOrNegative(s, indext1, flag);
+                        sentence = (EvalExpression(s.ToCharArray()).ToString());
+                        Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
+                        return sentence;
+                    }
+                    sentence = (EvalExpression(s.ToCharArray()).ToString());
                     Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                     return sentence;
                 }
-                
+                s = convertToPositiveOrNegative(s, indext1, flag);
+                sentence = (EvalExpression(s.ToCharArray()).ToString());
+                Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
+                return sentence;
             }
+
+            s = convertUnknown(s, index, x);
+            s = convertToPositiveOrNegative(s, indext1, flag);
+            sentence = (EvalExpression(s.ToCharArray()).ToString());
+            Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
             return sentence;
         }
+        static int[] GetIndexes(string s, char c)
+        {
+            int br1 = 0;
+            int br0 = 0;
+            List<int> Ind = new List<int>();
+            foreach (char i in s)
+            {
 
-        //Method takes string with unknown numbers in a sentence and redefines a sentence with nubmers
+                if (i == c)
+                {
+                    Ind.Add(br1);
+                    br0++;
+                }
+                br1++;
+            }
+            //int[] ls = new int[br0];
+
+            //foreach (int el in Ind)
+            //{
+            //    int br2 = 0;
+            //    ls[br2] = el;
+            //    br2++;
+            //}
+            int[] ind = Ind.ToArray();
+            return ind;
+        }
+        static int GetIndexOfTrig(string s)
+        {
+            int index = s.IndexOf('c');
+            if (index == -1)
+                index = s.IndexOf('s');
+            if (index == -1)
+                index = s.IndexOf('t');
+            return index;
+        }
+
         static string convertUnknown(string s, int[] indexAr, double x)
         {
             foreach (int i in indexAr)
@@ -103,34 +164,136 @@ namespace MathSentenceInterpreter
             return s;
         }
 
-        //Method returns all indexes of all unknown numbers in the sentence
-        static int[] GetIndexes(string s, char c)
+        static string convertToPositiveOrNegative(string s, int indext1, int flag)
         {
-            int br1 = 0;
-            int br0 = 0;
-            List<int> Ind = new List<int>();
-            foreach (char i in s)
+            bool isNegative = false;
+            string trigString;
+            var aStringBuilder = new StringBuilder(s);
+            double trig = convertTrig(s, indext1);
+            if (s[indext1 - 1] == '-')
+                isNegative = true;
+            if (trig == 0 || trig == 1 || trig == 2 || trig == 3 || trig == -1 || trig == -2 || trig == -3)
             {
-
-                if (i == c)
+                if (s[indext1 + 4] == '-')
                 {
-                    Ind.Add(br1);
-                    br0++;
+                    trigString = trig.ToString();
+                    aStringBuilder = new StringBuilder(s);
+                    aStringBuilder.Remove(indext1 - 1, 7);
+                    if (s[indext1 - 1] == '-')
+                    {
+                        double temp = Convert.ToDouble(trigString);
+                        temp *= -1;
+                        trigString = "+" + temp.ToString();
+                        aStringBuilder.Insert(indext1 - 1, trigString);
+                        s = aStringBuilder.ToString();
+                        return s;
+                    }
+                    aStringBuilder.Insert(indext1 - 1, trigString);
+                    s = aStringBuilder.ToString();
+                    return s;
                 }
-                br1++;
+                trigString = trig.ToString();
+                aStringBuilder = new StringBuilder(s);
+                aStringBuilder.Remove(indext1 - 1, 6);
+                aStringBuilder.Insert(indext1 - 1, "+" + trigString);
+                s = aStringBuilder.ToString();
+                return s;
             }
-            int[] ind = Ind.ToArray();
-            return ind;
+            if (trig < 0 && isNegative == true)
+            {
+                trigString = trig.ToString();
+                aStringBuilder = new StringBuilder(s);
+                aStringBuilder.Remove(indext1 - 1, 1);
+                aStringBuilder.Insert(indext1 - 1, trigString);
+                aStringBuilder.Remove(indext1 + 1, 6);
+                s = aStringBuilder.ToString();
+                return s;
+            }
+            else
+            {
+                trigString = trig.ToString();
+                aStringBuilder = new StringBuilder(s);
+                aStringBuilder.Insert(indext1, trigString);
+                aStringBuilder.Remove(indext1 + 1, 6);
+                s = aStringBuilder.ToString();
+                return s;
+            }
         }
-        //Method returns index of trigonometry expression in the sentence
-        static int GetIndexOfTrig(string s)
+        static double convertTrig(string s, int indext1)
         {
-            int index = s.IndexOf('c');
-            if (index == -1)
-                index = s.IndexOf('s');
-            if (index == -1)
-                index = s.IndexOf('t');
-            return index;
+            string trigNum;
+            double num;
+            double trig;
+            if (s[indext1 - 1] == '-')
+            {
+                if (s[indext1 + 4] == '-')
+                {
+                    trigNum = s[indext1 + 5].ToString();
+                    num = Convert.ToDouble(trigNum);
+                    num = num * -1;
+                }
+                else
+                {
+                    trigNum = s[indext1 + 4].ToString();
+                    num = Convert.ToDouble(trigNum);
+                }
+                if (s[indext1] == 'c')
+                {
+                    num = Math.Cos(num);
+                }
+                if (s[indext1] == 's')
+                {
+                    num = Math.Sin(num);
+                }
+                if (s[indext1] == 't')
+                {
+                    num = Math.Tan(num);
+                }
+                if (num < 0)
+                {
+                    trig = Math.Round(num, 1);
+                    trig = Adjust(trig);
+                }
+                else
+                {
+                    trig = num * -1;
+                    trig = Math.Round(trig, 1);
+                    trig = Adjust(trig);
+                }
+
+            }
+            else
+            {
+                if (s[indext1 + 4] == '-')
+                {
+                    trigNum = s[indext1 + 5].ToString();
+                    num = Convert.ToDouble(trigNum);
+                    num = num * -1;
+                }
+                else
+                {
+                    trigNum = s[indext1 + 4].ToString();
+                    num = Convert.ToDouble(trigNum);
+                }
+                if (s[indext1] == 'c')
+                {
+                    num = Math.Cos(num);
+                }
+                if (s[indext1] == 's')
+                {
+                    num = Math.Sin(num);
+                }
+                if (s[indext1] == 't')
+                {
+                    num = Math.Tan(num);
+                }
+                trig = Math.Round(num, 1);
+                trig = Adjust(trig);
+            }
+            return trig;
+
+
+
         }
         static double Adjust(double input)
         {
