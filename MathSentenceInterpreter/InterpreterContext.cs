@@ -82,14 +82,7 @@ namespace MathInterpreter
                 }
                 br1++;
             }
-            //int[] ls = new int[br0];
-
-            //foreach (int el in Ind)
-            //{
-            //    int br2 = 0;
-            //    ls[br2] = el;
-            //    br2++;
-            //}
+            
             int[] ind = Ind.ToArray();
             return ind;
         }
@@ -195,7 +188,14 @@ namespace MathInterpreter
                 trigString = trig.ToString();
                 aStringBuilder = new StringBuilder(s);
                 aStringBuilder.Remove(indext1 - 1, 6);
-                aStringBuilder.Insert(indext1 - 1, "+" + trigString);
+                if (trigString[0].Equals('-'))
+                {
+                    aStringBuilder.Insert(indext1 - 1, trigString);
+                }
+                else
+                {
+                    aStringBuilder.Insert(indext1 - 1, "+" + trigString);
+                }
                 s = aStringBuilder.ToString();
                 return s;
             }
