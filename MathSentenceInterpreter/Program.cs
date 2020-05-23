@@ -12,7 +12,7 @@ namespace MathSentenceInterpreter
         {
             MathExpressions i = new MathExpressions();
 
-            i.BasicMathExpression("2+3*3");
+            i.BasicMathExpressionWithOneOrMoreUnknown("2+3*x",2);
         }
     }
 }

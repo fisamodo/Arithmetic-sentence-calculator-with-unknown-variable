@@ -29,9 +29,76 @@ namespace MathSentenceInterpreter
                     Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                     return sentence;
                 }
+                if(flag == -2)
+                {
+                    sentence = convertUnknown(s, index, x);
+                    sentence = (EvalExpression(s.ToCharArray()).ToString());
+                    Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
+                    return sentence;
+                }
                 
             }
             return sentence;
+        }
+        static string convertUnknown(string s, int[] indexAr, double x)
+        {
+            foreach (int i in indexAr)
+            {
+                if (x == 0.01)
+                    return s;
+                int indext1 = i;
+                if (i == -1)
+                    indext1 = GetIndexOfTrig(s);
+                int indexTemp;
+                indexTemp = indext1;
+                var aStringBuilder = new StringBuilder(s);
+                if (x < 0)
+                {
+                    if (s[indexTemp - 1] == '-')
+                    {
+                        string val = x.ToString();
+                        val = val[1].ToString();
+                        val = '+' + val;
+                        aStringBuilder.Remove(indexTemp - 1, 2);
+                        aStringBuilder.Insert(indexTemp - 1, val);
+                        s = aStringBuilder.ToString();
+                    }
+                    else if (s[indexTemp - 1] == '(')
+                    {
+                        aStringBuilder.Remove(indexTemp, 1);
+                        aStringBuilder.Insert(indexTemp, x.ToString());
+                        s = aStringBuilder.ToString();
+                    }
+                    else
+                    {
+                        aStringBuilder.Remove(indexTemp - 1, 2);
+                        aStringBuilder.Insert(indexTemp - 1, x.ToString());
+                        s = aStringBuilder.ToString();
+                    }
+                }
+                else
+                {
+                    if (s[indexTemp - 1] == '-')
+                    {
+                        string val = x.ToString();
+                        val = val[0].ToString();
+                        val = '-' + val;
+                        aStringBuilder.Remove(indexTemp - 1, 2);
+                        aStringBuilder.Insert(indexTemp - 1, val);
+                        s = aStringBuilder.ToString();
+                    }
+                    else if (s[indexTemp - 1] == '(')
+                    {
+                        aStringBuilder.Remove(indexTemp, 1);
+                        aStringBuilder.Insert(indexTemp, x.ToString());
+                        s = aStringBuilder.ToString();
+                    }
+                    aStringBuilder.Remove(indexTemp, 1);
+                    aStringBuilder.Insert(indexTemp, x.ToString());
+                    s = aStringBuilder.ToString();
+                }
+            }
+            return s;
         }
 
         //Method returns all indexes of all unknown numbers in the sentence
