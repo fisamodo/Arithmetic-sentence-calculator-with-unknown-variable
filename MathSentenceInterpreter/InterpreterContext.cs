@@ -18,8 +18,20 @@ namespace MathSentenceInterpreter
         }
         public static string Calculate(string s, double x = 0.01, int flag = 0)
         {
-            Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
-            return EvalExpression(s.ToCharArray()).ToString();
+            string sentence = "";
+            int indext1 = GetIndexOfTrig(s);
+            int[] index = GetIndexes(s, 'x');
+            if (flag == -1 || flag == -2)
+            {
+                if (flag == -1)
+                {                
+                    sentence = (EvalExpression(s.ToCharArray()).ToString());
+                    Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
+                    return sentence;
+                }
+                
+            }
+            return sentence;
         }
 
         //Method returns all indexes of all unknown numbers in the sentence
