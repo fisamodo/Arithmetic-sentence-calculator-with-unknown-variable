@@ -21,6 +21,36 @@ namespace MathSentenceInterpreter
             Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
             return EvalExpression(s.ToCharArray()).ToString();
         }
+
+        //Method returns all indexes of all unknown numbers in the sentence
+        static int[] GetIndexes(string s, char c)
+        {
+            int br1 = 0;
+            int br0 = 0;
+            List<int> Ind = new List<int>();
+            foreach (char i in s)
+            {
+
+                if (i == c)
+                {
+                    Ind.Add(br1);
+                    br0++;
+                }
+                br1++;
+            }
+            int[] ind = Ind.ToArray();
+            return ind;
+        }
+        //Method returns index of trigonometry expression in the sentence
+        static int GetIndexOfTrig(string s)
+        {
+            int index = s.IndexOf('c');
+            if (index == -1)
+                index = s.IndexOf('s');
+            if (index == -1)
+                index = s.IndexOf('t');
+            return index;
+        }
         public static double EvalExpression(char[] expr)
         {
             return parseSummands(expr, 0);
