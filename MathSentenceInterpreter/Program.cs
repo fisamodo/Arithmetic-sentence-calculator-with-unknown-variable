@@ -10,9 +10,8 @@ namespace MathSentenceInterpreter
     {
         static void Main(string[] args)
         {
-            MathExpressions i = new MathExpressions();
 
-            i.BasicMathExpressionWithOneOrMoreUnknown("2+3*x",2);
+
         }
     }
 }

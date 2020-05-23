@@ -29,10 +29,10 @@ namespace MathSentenceInterpreter
                     Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                     return sentence;
                 }
-                if(flag == -2)
+                sentence = convertUnknown(s, index, x);
+                if (flag == -2)
                 {
-                    sentence = convertUnknown(s, index, x);
-                    sentence = (EvalExpression(s.ToCharArray()).ToString());
+                    sentence = EvalExpression(s.ToCharArray()).ToString();
                     Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                     return sentence;
                 }
@@ -40,6 +40,8 @@ namespace MathSentenceInterpreter
             }
             return sentence;
         }
+
+        //Method takes string with unknown numbers in a sentence and redefines a sentence with nubmers
         static string convertUnknown(string s, int[] indexAr, double x)
         {
             foreach (int i in indexAr)
@@ -129,6 +131,29 @@ namespace MathSentenceInterpreter
             if (index == -1)
                 index = s.IndexOf('t');
             return index;
+        }
+        static double Adjust(double input)
+        {
+            double whole = Math.Truncate(input);
+            double remainder = input - whole;
+            if (remainder < 0.5 && remainder > 0)
+            {
+                remainder = 0;
+            }
+            if (remainder >= 0.5)
+            {
+                remainder = 1;
+            }
+            if (remainder > -0.5 && remainder < 0)
+            {
+                remainder = 0;
+            }
+            if (remainder <= -0.5)
+            {
+                remainder = -1;
+            }
+
+            return whole + remainder;
         }
         public static double EvalExpression(char[] expr)
         {
