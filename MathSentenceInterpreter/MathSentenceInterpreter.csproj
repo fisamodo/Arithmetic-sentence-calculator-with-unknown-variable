@@ -46,8 +46,10 @@
     <Compile Include="Expressions.cs" />
     <Compile Include="InterpreterContext.cs" />
     <Compile Include="MathExpressions.cs" />
+    <Compile Include="MathParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SentenceTranslator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

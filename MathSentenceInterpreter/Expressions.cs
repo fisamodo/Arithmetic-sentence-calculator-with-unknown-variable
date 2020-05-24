@@ -11,5 +11,6 @@ namespace MathSentenceInterpreter
         public abstract string BasicMathExpression(string s, double x = 0.01, int flag = -1);
         public abstract string BasicMathExpressionWithOneOrMoreUnknown(string s, double x, int flag = -2);
         public abstract string BasicMathExpressionWithTrigonometry(string s, double x);
+        
     }
 }

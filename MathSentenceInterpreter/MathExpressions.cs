@@ -20,8 +20,6 @@ namespace MathSentenceInterpreter
 
             string sentence = InterpreterContext.Calculate(s, x, flag);
             return sentence;
-
-
         }
 
         public override string BasicMathExpressionWithTrigonometry(string s, double x)
