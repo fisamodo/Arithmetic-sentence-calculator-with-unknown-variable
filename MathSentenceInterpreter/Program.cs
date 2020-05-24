@@ -19,7 +19,6 @@ namespace MathSentenceInterpreter
             Console.WriteLine("This calculator rounds off >0.5 to 1, and < 0.5 to 0");
             Console.WriteLine("This calculator doesn't allow decimal values as input");
             Console.WriteLine("This calculator doesn't allow ctg-arctan values as input");
-
             while (reRun)
             {
                 Console.WriteLine("Pick your Math Expression type");
