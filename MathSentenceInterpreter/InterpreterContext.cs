@@ -32,7 +32,6 @@ namespace MathInterpreter
                         Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                         return sentence;
                     }
-
                 }
                 s = convertUnknown(s, index, x);
                 if (flag == -2)
@@ -41,7 +40,6 @@ namespace MathInterpreter
                     Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                     return sentence;
                 }
-
                 if (flag == -1)
                 {
                     if (indext1 != -1)
@@ -60,7 +58,6 @@ namespace MathInterpreter
                 Console.WriteLine(EvalExpression(s.ToCharArray()).ToString());
                 return sentence;
             }
-
             s = convertUnknown(s, index, x);
             s = convertToPositiveOrNegative(s, indext1, flag);
             sentence = (EvalExpression(s.ToCharArray()).ToString());
@@ -74,7 +71,6 @@ namespace MathInterpreter
             List<int> Ind = new List<int>();
             foreach (char i in s)
             {
-
                 if (i == c)
                 {
                     Ind.Add(br1);
@@ -82,7 +78,6 @@ namespace MathInterpreter
                 }
                 br1++;
             }
-            
             int[] ind = Ind.ToArray();
             return ind;
         }
@@ -181,13 +176,31 @@ namespace MathInterpreter
                         s = aStringBuilder.ToString();
                         return s;
                     }
-                    aStringBuilder.Insert(indext1 - 1, trigString);
-                    s = aStringBuilder.ToString();
-                    return s;
+                    if (trigString[0] == '-')
+                    {
+                        aStringBuilder.Insert(indext1 - 1, trigString);
+                        s = aStringBuilder.ToString();
+                        return s;
+                    }
+                    else
+                    {
+                        if (trigString[0] == '-')
+                        {
+                            aStringBuilder.Insert(indext1 - 1, trigString);
+                            s = aStringBuilder.ToString();
+                            return s;
+                        }
+                        else
+                        {
+                            aStringBuilder.Insert(indext1 - 1, "+" + trigString);
+                            s = aStringBuilder.ToString();
+                            return s;
+                        }
+                    }
                 }
                 trigString = trig.ToString();
                 aStringBuilder = new StringBuilder(s);
-                aStringBuilder.Remove(indext1 - 1, 6);
+                aStringBuilder.Remove(indext1 - 1, 7);
                 if (trigString[0].Equals('-'))
                 {
                     aStringBuilder.Insert(indext1 - 1, trigString);
@@ -260,7 +273,6 @@ namespace MathInterpreter
                     trig = Math.Round(trig, 1);
                     trig = Adjust(trig);
                 }
-
             }
             else
             {
@@ -291,9 +303,6 @@ namespace MathInterpreter
                 trig = Adjust(trig);
             }
             return trig;
-
-
-
         }
         static double Adjust(double input)
         {
@@ -315,7 +324,6 @@ namespace MathInterpreter
             {
                 remainder = -1;
             }
-
             return whole + remainder;
         }
         public static double EvalExpression(char[] expr)
@@ -369,8 +377,6 @@ namespace MathInterpreter
                 }
             }
             return double.Parse(dbl);
-
-
         }
     }
 }

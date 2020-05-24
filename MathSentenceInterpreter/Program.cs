@@ -30,7 +30,6 @@ namespace MathSentenceInterpreter
                 switch (pick)
                 {
                     case ("A"):
-                        x = 0.01;
                         Console.WriteLine("Write your A sentence");
                         s = Console.ReadLine();
                         m.BasicMathExpression(s);
