@@ -24,19 +24,9 @@ namespace MathInterpreter
             int[] index = SentenceTranslator.GetIndexes(s, 'x');
             if (flag == -1 || flag == -2)
             {
-                if (x == 0.01)
-                {
-                    if (flag == -2)
-                    {
-                        s = SentenceTranslator.convertUnknown(s, index, x);
-                        sentence = (MathParser.EvalExpression(s.ToCharArray()).ToString());
-                        Console.WriteLine(MathParser.EvalExpression(s.ToCharArray()).ToString());
-                        return sentence;
-                    }
-                }
-                s = SentenceTranslator.convertUnknown(s, index, x);
                 if (flag == -2)
                 {
+                    s = SentenceTranslator.convertUnknown(s, index, x);
                     sentence = (MathParser.EvalExpression(s.ToCharArray()).ToString());
                     Console.WriteLine(MathParser.EvalExpression(s.ToCharArray()).ToString());
                     return sentence;
